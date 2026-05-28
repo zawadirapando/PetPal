@@ -4,11 +4,13 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.petpal.ui.theme.LocalPetPalColors
 import com.example.petpal.ui.theme.PetPalTheme
@@ -16,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.example.petpal.ui.theme.Typography
 
 @Composable
-fun PetPlaOutlindButton(
+fun PetPalOutlinedButton(
     text: String,
     onClick: () -> Unit
 ){
@@ -29,12 +31,15 @@ fun PetPlaOutlindButton(
             .fillMaxWidth()
             .height(56.dp),
         shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, extraColors.divider)
+        border = BorderStroke(1.dp, extraColors.divider),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = extraColors.fieldFill,
+            colorScheme.onBackground
+        )
     ) {
         Text(
             text = text,
             style = Typography.labelLarge,
-            color = colorScheme.onBackground
         )
     }
 }
@@ -43,7 +48,7 @@ fun PetPlaOutlindButton(
 @Composable
 fun PreviewPetPlaOutlindButton(){
     PetPalTheme {
-        PetPlaOutlindButton(
+        PetPalOutlinedButton(
             text = "I'm a sitter",
             onClick = {}
         )
