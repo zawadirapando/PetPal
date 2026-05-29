@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -79,6 +80,7 @@ fun SignUpScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(colorScheme.background)
+            .systemBarsPadding()
             .verticalScroll(scrollState)
             .padding(horizontal = 30.dp, vertical = 50.dp)
     ){
