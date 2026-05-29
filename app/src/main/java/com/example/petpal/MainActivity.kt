@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.petpal.ui.screens.LoginScreen
 import com.example.petpal.ui.screens.SignUpScreen
+import com.example.petpal.ui.screens.ResetPasswordScreen
 import com.example.petpal.ui.theme.PetPalTheme
 
 class MainActivity : ComponentActivity() {
