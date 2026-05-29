@@ -2,7 +2,6 @@ package com.example.petpal.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -57,6 +56,7 @@ fun LoginScreen(){
             .verticalScroll(scrollState)
             .padding(horizontal = 30.dp, vertical = 50.dp)
     ){
+        //Top action
         Row (
             modifier = Modifier
                 .fillMaxWidth()
@@ -73,48 +73,51 @@ fun LoginScreen(){
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        //Header
         Icon(
             painter = painterResource(id = R.drawable.ic_custom_paw),
             contentDescription = "PetPal logo",
             tint = colorScheme.primary,
-            modifier = Modifier
-                .size(96.dp)
-                .padding(bottom = 24.dp)
+            modifier = Modifier.size(96.dp).padding(bottom = 24.dp)
         )
 
-        Text(
-            text = "WELCOME BACK",
-            style = Typography.labelMedium.copy(letterSpacing = 1.sp),
-            color = colorScheme.primary,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ){
+            Text(
+                text = "WELCOME BACK",
+                style = Typography.labelMedium.copy(letterSpacing = 1.sp, fontWeight = FontWeight.Bold),
+                color = colorScheme.primary
+            )
 
-        Text(
-            text = "Sign in.",
-            style = SerifDisplayStyle,
-            color = colorScheme.onBackground,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
+            Text(
+                text = "Sign in.",
+                style = SerifDisplayStyle,
+                color = colorScheme.onBackground,
+            )
 
-        Text(
-            text = "Good to see you again",
-            style = Typography.bodyMedium,
-            color = extraColors.textSecondary,
-            modifier = Modifier.padding(bottom = 32.dp)
-        )
+            Text(
+                text = "Good to see you again",
+                style = Typography.bodyMedium,
+                color = extraColors.textSecondary
+            )
+        }
 
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        //Form section
         PetPalTextField(
             label = "Email address",
-            placeholder = "you@email.com",
+            placeholder = "",
             value = email,
-            onValueChange = {email = it}
+            onValueChange = {email = it},
+            modifier = Modifier.padding(bottom = 16.dp)
         )
-
-        Spacer(modifier = Modifier.height(16.dp))
 
         PetPalPasswordField(
             label = "Password",
-            placeholder = "••••••••",
+            placeholder = "",
             value = password,
             onValueChange = {password = it}
         )
@@ -122,7 +125,7 @@ fun LoginScreen(){
         Row (
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp, bottom = 32.dp),
+                .padding(top = 8.dp),
             horizontalArrangement = Arrangement.End
         ){
             Text(
@@ -133,6 +136,9 @@ fun LoginScreen(){
             )
         }
 
+        Spacer(modifier = Modifier.height(32.dp))
+
+        //Action section
         PetPalPrimaryButton(
             text = "Sign in",
             onClick = {}
@@ -166,10 +172,9 @@ fun LoginScreen(){
             onClick = {}
         )
 
-        Spacer(
-            modifier = Modifier.height(48.dp)
-        )
+        Spacer(modifier = Modifier.height(32.dp))
 
+        //Footer
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
@@ -182,7 +187,7 @@ fun LoginScreen(){
            )
             Text(
                 text = "Create an account",
-                style = Typography.labelMedium.copy(fontWeight = FontWeight.Bold),
+                style = Typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                 color = colorScheme.primary,
                 modifier = Modifier.clickable {  }
             )

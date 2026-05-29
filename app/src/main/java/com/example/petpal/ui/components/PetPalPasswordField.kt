@@ -41,7 +41,7 @@ fun PetPalPasswordField(
             text = label,
             style = Typography.labelMedium,
             color = extraColors.textLabel,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(bottom = 8.dp)
         )
 
         OutlinedTextField(
