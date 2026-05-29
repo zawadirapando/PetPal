@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.example.petpal.ui.navigation.PetPalNavigation
 import com.example.petpal.ui.screens.LoginScreen
 import com.example.petpal.ui.screens.SignUpScreen
 import com.example.petpal.ui.screens.ResetPasswordScreen
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    SignUpScreen()
+                    PetPalNavigation()
                 }
             }
         }

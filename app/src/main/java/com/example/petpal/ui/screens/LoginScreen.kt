@@ -40,7 +40,10 @@ import com.example.petpal.ui.theme.Typography
 import com.example.petpal.ui.theme.SerifDisplayStyle
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(
+    onNavigateToSignUp: () -> Unit,
+    onNavigateToResetPassword: () -> Unit
+){
     val extraColors = LocalPetPalColors.current
     val colorScheme = MaterialTheme.colorScheme
 
@@ -67,7 +70,7 @@ fun LoginScreen(){
                 text = "Sign up",
                 style = Typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                 color = colorScheme.primary,
-                modifier = Modifier.clickable {  }
+                modifier = Modifier.clickable { onNavigateToSignUp() }
             )
         }
 
@@ -132,7 +135,7 @@ fun LoginScreen(){
                 text = "Forgot password?",
                 style = Typography.labelMedium,
                 color = colorScheme.primary,
-                modifier = Modifier.clickable {  }
+                modifier = Modifier.clickable { onNavigateToResetPassword() }
             )
         }
 
@@ -189,16 +192,8 @@ fun LoginScreen(){
                 text = "Create an account",
                 style = Typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                 color = colorScheme.primary,
-                modifier = Modifier.clickable {  }
+                modifier = Modifier.clickable { onNavigateToSignUp() }
             )
         }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewLoginScreen(){
-    PetPalTheme {
-        LoginScreen()
     }
 }

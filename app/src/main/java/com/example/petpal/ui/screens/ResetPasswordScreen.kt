@@ -38,7 +38,9 @@ import com.example.petpal.ui.theme.SerifDisplayStyle
 import com.example.petpal.ui.theme.Typography
 
 @Composable
-fun ResetPasswordScreen(){
+fun ResetPasswordScreen(
+    onNavigateToLogin: () -> Unit
+){
     val extraColors = LocalPetPalColors.current
     val colorScheme = MaterialTheme.colorScheme
 
@@ -53,7 +55,7 @@ fun ResetPasswordScreen(){
         //Top action
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.clickable {  }
+            modifier = Modifier.clickable { onNavigateToLogin() }
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -138,7 +140,7 @@ fun ResetPasswordScreen(){
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Already have an account? ",
+                text = "Remembered it? ",
                 style = Typography.bodyMedium,
                 color = extraColors.textSecondary
             )
@@ -146,7 +148,7 @@ fun ResetPasswordScreen(){
                 text = "Sign in",
                 style = Typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                 color = colorScheme.primary,
-                modifier = Modifier.clickable {  }
+                modifier = Modifier.clickable { onNavigateToLogin() }
             )
         }
     }
