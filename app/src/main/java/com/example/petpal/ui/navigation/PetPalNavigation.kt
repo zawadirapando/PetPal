@@ -18,7 +18,12 @@ fun PetPalNavigation(){
     ){
         composable("login"){
             LoginScreen(
-                onNavigateToSignUp = {navController.navigate("signup")},
+                onNavigateToSignUp = {
+                    navController.navigate("signup") {
+                        launchSingleTop = true
+                        popUpTo("login") { inclusive = true }
+                    }
+                },
                 onNavigateToResetPassword = {navController.navigate("reset_password")}
             )
         }
@@ -26,7 +31,10 @@ fun PetPalNavigation(){
         composable("signup"){
             SignUpScreen(
                 onNavigateToLogin = {
-                    navController.popBackStack()
+                    navController.navigate("login") {
+                        launchSingleTop = true
+                        popUpTo("signup") { inclusive = true }
+                    }
                 }
             )
         }
@@ -34,7 +42,10 @@ fun PetPalNavigation(){
         composable("reset_password"){
             ResetPasswordScreen(
                 onNavigateToLogin = {
-                    navController.popBackStack()
+                    navController.navigate("login") {
+                        launchSingleTop = true
+                        popUpTo("signup") { inclusive = true }
+                    }
                 }
             )
         }
