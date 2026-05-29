@@ -22,11 +22,12 @@ fun PetPalTextField (
     label: String,
     placeholder: String,
     value: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
 ){
     val extraColors = LocalPetPalColors.current
 
-    Column (modifier = Modifier.fillMaxWidth() ) {
+    Column (modifier = modifier.fillMaxWidth() ) {
         Text(
             text = label,
             style = Typography.labelMedium,
