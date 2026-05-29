@@ -37,7 +37,7 @@ val SerifDisplayStyle = TextStyle(
     fontWeight = FontWeight.Bold,
     fontStyle = FontStyle.Italic,
     fontSize = 48.sp,
-    lineHeight = 34.5.sp,
+    lineHeight = 40.5.sp,
     letterSpacing = (-0.3).sp,
 )
 
@@ -132,13 +132,13 @@ val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily    = DmSansFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+        fontSize = 18.sp,
         lineHeight = 24.sp
     ),
     bodyMedium = TextStyle(
         fontFamily    = DmSansFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 18.sp,
+        fontSize = 16.sp,
         lineHeight = 20.sp
     ),
     bodySmall = TextStyle(
