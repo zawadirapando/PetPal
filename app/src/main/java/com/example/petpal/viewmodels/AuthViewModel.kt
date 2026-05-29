@@ -51,10 +51,15 @@ class AuthViewModel : ViewModel() {
             return
         }
 
+        if (password.length < 8){
+            _authState.value = AuthState.Error("Password must be at least 8 characters long")
+            return
+        }
+
         _authState.value = AuthState.Loading
         //TODO: Show spinner here
 
-        auth.signInWithEmailAndPassword(email.trim(), password)
+        auth.createUserWithEmailAndPassword(email.trim(), password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful){
                     _authState.value = AuthState.Success
