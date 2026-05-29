@@ -30,17 +30,23 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
 import com.example.petpal.R
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.petpal.ui.components.PetPalTextField
 import com.example.petpal.ui.components.PetPalPasswordField
 import com.example.petpal.ui.components.PetPalPrimaryButton
 import com.example.petpal.ui.components.PetPalOutlinedButton
 import com.example.petpal.ui.theme.Typography
 import com.example.petpal.ui.theme.SerifDisplayStyle
+import com.example.petpal.viewmodels.AuthState
+import com.example.petpal.viewmodels.AuthViewModel
 
 @Composable
 fun LoginScreen(
+    viewModel: AuthViewModel = viewModel(),
     onNavigateToSignUp: () -> Unit,
     onNavigateToResetPassword: () -> Unit
 ){
@@ -51,6 +57,16 @@ fun LoginScreen(
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    val currentAuthState by viewModel.authState.collectAsState()
+
+    LaunchedEffect(currentAuthState) {
+        if (currentAuthState is AuthState.Success){
+            viewModel.resetState()
+            //TODO: navController.navigate("home")
+            println("LOGIN SUCCESSFUL!")
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -110,6 +126,15 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         //Form section
+        if (currentAuthState is AuthState.Error){
+            Text(
+                text = (currentAuthState as AuthState.Error).message,
+                style = Typography.bodyMedium,
+                color = colorScheme.error,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
+
         PetPalTextField(
             label = "Email address",
             placeholder = "",
@@ -143,8 +168,8 @@ fun LoginScreen(
 
         //Action section
         PetPalPrimaryButton(
-            text = "Log in",
-            onClick = {}
+            text = if (currentAuthState is AuthState.Loading) "Logging in..." else "Log in",
+            onClick = {viewModel.logIn(email, password)}
         )
 
         //or DIVIDER
