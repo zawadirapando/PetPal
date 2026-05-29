@@ -145,7 +145,7 @@ fun ResetPasswordScreen(
                 color = extraColors.textSecondary
             )
             Text(
-                text = "Sign in",
+                text = "Log in",
                 style = Typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                 color = colorScheme.primary,
                 modifier = Modifier.clickable { onNavigateToLogin() }

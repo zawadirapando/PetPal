@@ -94,7 +94,7 @@ fun LoginScreen(
             )
 
             Text(
-                text = "Sign in.",
+                text = "Log in.",
                 style = SerifDisplayStyle,
                 color = colorScheme.onBackground,
             )
@@ -143,7 +143,7 @@ fun LoginScreen(
 
         //Action section
         PetPalPrimaryButton(
-            text = "Sign in",
+            text = "Log in",
             onClick = {}
         )
 
@@ -171,7 +171,7 @@ fun LoginScreen(
         }
 
         PetPalOutlinedButton(
-            text = "I'm a Sitter",
+            text = "I'm a Sitter", //TODO: Connect this button to sitter UI
             onClick = {}
         )
 
