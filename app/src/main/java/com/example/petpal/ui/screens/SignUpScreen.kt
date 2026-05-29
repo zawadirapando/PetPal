@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,8 +27,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -48,6 +54,8 @@ fun SignUpScreen(
 ){
     val extraColors = LocalPetPalColors.current
     val colorScheme = MaterialTheme.colorScheme
+
+    val focusManager = LocalFocusManager.current
 
     val scrollState = rememberScrollState()
 
@@ -146,6 +154,10 @@ fun SignUpScreen(
                     placeholder = "",
                     value = firstName,
                     onValueChange = {firstName = it},
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    keyboardActions = KeyboardActions(
+                        onNext = {focusManager.moveFocus(FocusDirection.Next)}
+                    ),
                     modifier = Modifier.weight(1f)
                 )
                 PetPalTextField(
@@ -153,6 +165,10 @@ fun SignUpScreen(
                     placeholder = "",
                     value = lastName,
                     onValueChange = {lastName = it},
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    keyboardActions = KeyboardActions(
+                        onNext = {focusManager.moveFocus(FocusDirection.Next)}
+                    ),
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -161,19 +177,34 @@ fun SignUpScreen(
                 label = "Email",
                 placeholder = "",
                 value = email,
-                onValueChange = {email = it}
+                onValueChange = {email = it},
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                keyboardActions = KeyboardActions(
+                    onNext = {focusManager.moveFocus(FocusDirection.Next)}
+                )
             )
 
             PetPalPhoneField(
                 value = phone,
-                onValueChange = {phone = it}
+                onValueChange = {phone = it},
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = { focusManager.moveFocus(FocusDirection.Next) }
+                )
             )
 
             PetPalPasswordField(
                 label = "Password",
                 placeholder = "",
                 value = password,
-                onValueChange = {password = it}
+                onValueChange = {password = it},
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(
+                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                )
             )
         }
 

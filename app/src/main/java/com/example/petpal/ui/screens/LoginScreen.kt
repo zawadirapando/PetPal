@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -33,7 +35,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.petpal.ui.components.PetPalTextField
 import com.example.petpal.ui.components.PetPalPasswordField
@@ -52,6 +57,8 @@ fun LoginScreen(
 ){
     val extraColors = LocalPetPalColors.current
     val colorScheme = MaterialTheme.colorScheme
+
+    val focusManager = LocalFocusManager.current
 
     val scrollState = rememberScrollState()
 
@@ -140,6 +147,10 @@ fun LoginScreen(
             placeholder = "",
             value = email,
             onValueChange = {email = it},
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions(
+                onNext = {focusManager.moveFocus(FocusDirection.Next)}
+            ),
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -147,7 +158,11 @@ fun LoginScreen(
             label = "Password",
             placeholder = "",
             value = password,
-            onValueChange = {password = it}
+            onValueChange = {password = it},
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(
+                onNext = {focusManager.moveFocus(FocusDirection.Next)}
+            )
         )
 
         Row (

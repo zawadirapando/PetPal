@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -23,7 +25,9 @@ fun PetPalTextField (
     placeholder: String,
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default
 ){
     val extraColors = LocalPetPalColors.current
 
@@ -41,6 +45,8 @@ fun PetPalTextField (
             placeholder = { Text(text = placeholder, color = extraColors.textHint) },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = extraColors.fieldFillFocused,
                 unfocusedContainerColor = extraColors.fieldFill,
