@@ -1,10 +1,14 @@
 package com.example.petpal.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
+import androidx.lifecycle.viewModelScope
+import com.example.petpal.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 sealed class AuthState {
     object Idle : AuthState()
@@ -12,8 +16,11 @@ sealed class AuthState {
     object Success : AuthState()
     data class Error(val message : String): AuthState()
 }
-class AuthViewModel : ViewModel() {
-    private val auth = FirebaseAuth.getInstance()
+
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val repository: AuthRepository
+) : ViewModel() {
 
     private val _authState = MutableStateFlow<AuthState>(AuthState.Idle)
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
@@ -31,14 +38,16 @@ class AuthViewModel : ViewModel() {
         _authState.value = AuthState.Loading
         //TODO: Show spinner here
 
-        auth.signInWithEmailAndPassword(email.trim(), password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful){
-                    _authState.value = AuthState.Success
-                }else{
-                    _authState.value = AuthState.Error(task.exception?.message?: "Login failed")
+        viewModelScope.launch {
+            val result = repository.logIn(email.trim(), password)
+
+            result.fold(
+                onSuccess = { _authState.value = AuthState.Success},
+                onFailure = { exception ->
+                    _authState.value = AuthState.Error(exception.message?: "Login failed")
                 }
-            }
+            )
+        }
     }
 
     //SIGN UP
@@ -59,14 +68,16 @@ class AuthViewModel : ViewModel() {
         _authState.value = AuthState.Loading
         //TODO: Show spinner here
 
-        auth.createUserWithEmailAndPassword(email.trim(), password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful){
-                    _authState.value = AuthState.Success
-                }else{
-                    _authState.value = AuthState.Error(task.exception?.message?: "Sign up failed")
+        viewModelScope.launch {
+            val result = repository.signUp(email.trim(), password)
+
+            result.fold(
+                onSuccess = { _authState.value = AuthState.Success},
+                onFailure = { exception ->
+                    _authState.value = AuthState.Error(exception.message?: "Sign up failed")
                 }
-            }
+            )
+        }
     }
 
     //RESET PASSWORD
@@ -81,19 +92,19 @@ class AuthViewModel : ViewModel() {
         _authState.value = AuthState.Loading
         //TODO: Show spinner here
 
-        auth.sendPasswordResetEmail(email.trim())
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful){
-                    _authState.value = AuthState.Success
-                }else{
-                    _authState.value = AuthState.Error(task.exception?.message?: "Failed to send reset email")
+        viewModelScope.launch {
+            val result = repository.resetPassword(email.trim())
+
+            result.fold(
+                onSuccess = { _authState.value = AuthState.Success},
+                onFailure = { exception ->
+                    _authState.value = AuthState.Error(exception.message?: "Failed to send reset email")
                 }
-            }
+            )
+        }
     }
 
     fun resetState(){
         _authState.value = AuthState.Idle
     }
-
-
 }

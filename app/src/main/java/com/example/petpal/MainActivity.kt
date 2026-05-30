@@ -12,7 +12,9 @@ import com.example.petpal.ui.screens.LoginScreen
 import com.example.petpal.ui.screens.SignUpScreen
 import com.example.petpal.ui.screens.ResetPasswordScreen
 import com.example.petpal.ui.theme.PetPalTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.petpal.ui.components.PetPalPrimaryButton
 import com.example.petpal.ui.components.PetPalTextField
@@ -47,7 +48,7 @@ import com.example.petpal.viewmodels.AuthViewModel
 
 @Composable
 fun ResetPasswordScreen(
-    viewModel: AuthViewModel = viewModel(),
+    viewModel: AuthViewModel = hiltViewModel(),
     onNavigateToLogin: () -> Unit
 ){
     val extraColors = LocalPetPalColors.current

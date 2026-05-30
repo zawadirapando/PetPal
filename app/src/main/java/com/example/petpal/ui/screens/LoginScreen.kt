@@ -40,6 +40,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.petpal.ui.components.PetPalTextField
 import com.example.petpal.ui.components.PetPalPasswordField
@@ -52,7 +53,7 @@ import com.example.petpal.viewmodels.AuthViewModel
 
 @Composable
 fun LoginScreen(
-    viewModel: AuthViewModel = viewModel(),
+    viewModel: AuthViewModel = hiltViewModel(),
     onNavigateToSignUp: () -> Unit,
     onNavigateToResetPassword: () -> Unit
 ){
