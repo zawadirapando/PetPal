@@ -33,4 +33,8 @@ class AuthRepositoryImpl(
             Result.failure(e)
         }
     }
+
+    override fun isUserAuthenticated(): Boolean {
+        return auth.currentUser != null
+    }
 }

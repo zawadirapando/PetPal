@@ -25,6 +25,9 @@ class AuthViewModel @Inject constructor(
     private val _authState = MutableStateFlow<AuthState>(AuthState.Idle)
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
 
+    val isUserAuthenticated: Boolean
+        get() = repository.isUserAuthenticated()
+
     //LOG IN
     fun logIn(
         email: String,

@@ -52,7 +52,8 @@ import com.example.petpal.viewmodels.AuthViewModel
 @Composable
 fun SignUpScreen(
     viewModel: AuthViewModel = hiltViewModel(),
-    onNavigateToLogin: () -> Unit
+    onNavigateToLogin: () -> Unit,
+    onSignUpSuccess: () -> Unit
 ){
     val extraColors = LocalPetPalColors.current
     val colorScheme = MaterialTheme.colorScheme
@@ -71,9 +72,8 @@ fun SignUpScreen(
 
     LaunchedEffect(currentAuthState) {
         if (currentAuthState is AuthState.Success){
+            onSignUpSuccess()
             viewModel.resetState()
-            //TODO: send to onboarding pages
-            println("SIGN UP SUCCESSFUL!")
         }
     }
 

@@ -55,7 +55,8 @@ import com.example.petpal.viewmodels.AuthViewModel
 fun LoginScreen(
     viewModel: AuthViewModel = hiltViewModel(),
     onNavigateToSignUp: () -> Unit,
-    onNavigateToResetPassword: () -> Unit
+    onNavigateToResetPassword: () -> Unit,
+    onLoginSuccess: () -> Unit
 ){
     val extraColors = LocalPetPalColors.current
     val colorScheme = MaterialTheme.colorScheme
@@ -71,9 +72,8 @@ fun LoginScreen(
 
     LaunchedEffect(currentAuthState) {
         if (currentAuthState is AuthState.Success){
+            onLoginSuccess()
             viewModel.resetState()
-            //TODO: navController.navigate("home")
-            println("LOGIN SUCCESSFUL!")
         }
     }
 
