@@ -26,7 +26,7 @@ fun ServiceCard(
     icon: ImageVector,
     title: String,
     subtitle: String,
-    containerColor: Color = MaterialTheme.colorScheme.surface,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceVariant,
     titleColor: Color = MaterialTheme.colorScheme.onBackground,
     iconTint: Color = LocalPetPalColors.current.textSecondary,
     modifier: Modifier = Modifier
@@ -37,7 +37,7 @@ fun ServiceCard(
         modifier = modifier.height(100.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = containerColor),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ){
         Column (
             modifier = Modifier

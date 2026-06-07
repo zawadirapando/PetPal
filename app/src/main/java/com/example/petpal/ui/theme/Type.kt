@@ -111,7 +111,7 @@ val Typography = Typography(
     titleLarge = TextStyle(
         fontFamily    = DmSansFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp,
+        fontSize = 18.sp,
         lineHeight = 24.sp
     ),
     titleMedium = TextStyle(
