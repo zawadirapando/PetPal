@@ -3,7 +3,7 @@ package com.example.petpal.data.mapper
 import com.example.petpal.data.model.*
 import com.example.petpal.domain.model.*
 
-//maps UserEntity (Firebase) -> User(UI)
+//maps UserEntity (Firebase) to User(UI)
 fun UserEntity.toDomain(): User {
     return User(
         uid = this.uid,
@@ -19,7 +19,7 @@ fun UserEntity.toDomain(): User {
     )
 }
 
-//maps PetEntity (Firebase) -> Pet(UI)
+//maps PetEntity (Firebase) to Pet(UI)
 fun PetEntity.toDomain(): Pet {
     return Pet(
         petId = this.petId,
@@ -32,7 +32,7 @@ fun PetEntity.toDomain(): Pet {
     )
 }
 
-//maps BookingEntity (Firebase) -> Booking(UI)
+//maps BookingEntity (Firebase) to Booking(UI)
 fun BookingEntity.toDomain(): Booking {
     return Booking(
         bookingId = this.bookingId,
@@ -46,5 +46,18 @@ fun BookingEntity.toDomain(): Booking {
         } catch (e: Exception) {
             BookingStatus.UNKNOWN
         }
+    )
+}
+
+fun SitterEntity.toDomain(): Sitter {
+    return Sitter(
+        id = this.id,
+        firstName = this.firstName,
+        lastName = this.lastName,
+        distanceKm = this.distanceKm,
+        price = this.price,
+        isVerified = this.isVerified,
+        acceptedPets = this.acceptedPets,
+        matchScore = this.matchScore,
     )
 }
