@@ -8,7 +8,7 @@ data class SitterEntity (
     val lastName: String = "",
     val distanceKm: Double = 0.0,
     val price: String = "",
-    val isVerified: Boolean = false,
+    val verified: Boolean = false,
     val acceptedPets: String = "All pets",
     val matchScore: Int? = null
 )

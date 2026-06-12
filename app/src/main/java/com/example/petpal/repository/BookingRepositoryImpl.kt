@@ -12,7 +12,7 @@ class BookingRepositoryImpl (
     override suspend fun getUpcomingBookingForUser(userId: String): Result<List<Booking>> {
         return try {
             val snapshot = firestore.collection("bookings")
-                .whereEqualTo("onwerId", userId)
+                .whereEqualTo("ownerId", userId)
                 .get()
                 .await()
             val bookings = snapshot.toObjects(BookingEntity::class.java).map { it.toDomain() }

@@ -40,7 +40,7 @@ data class SitterUiModel(
     val details: String,
     val price: String,
     val matchPercentage: String?,
-    val isVerified: Boolean
+    val verified: Boolean
 )
 
 data class HomeUiState(
@@ -63,7 +63,7 @@ fun Sitter.toUiModel(): SitterUiModel {
         details = "${this.distanceKm} km • ${this.acceptedPets}",
         price = this.price,
         matchPercentage = matchStr,
-        isVerified = this.isVerified
+        verified = this.verified
     )
 }
 

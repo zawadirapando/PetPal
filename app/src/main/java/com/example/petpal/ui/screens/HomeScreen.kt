@@ -21,15 +21,19 @@ import androidx.compose.material.icons.outlined.Bedtime
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Pets
 import androidx.compose.material.icons.outlined.WarningAmber
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.petpal.ui.components.BadgeType
 import com.example.petpal.ui.components.EmptyBookingCard
 import com.example.petpal.ui.components.PetPalHeader
@@ -38,14 +42,43 @@ import com.example.petpal.ui.components.SitterListItem
 import com.example.petpal.ui.components.TransactionCard
 import com.example.petpal.ui.theme.LocalPetPalColors
 import com.example.petpal.ui.theme.Typography
+import com.example.petpal.viewmodels.HomeViewModel
 
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
     val extraColors = LocalPetPalColors.current
     val colorScheme = MaterialTheme.colorScheme
 
-    val hasUpcomingBooking = true
+    //spinner
+    if (uiState.isLoading) {
+        Box (
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ){
+            CircularProgressIndicator(color = colorScheme.primary)
+        }
+        return
+    }
+
+    //error state
+    if (uiState.errorMessage != null) {
+        Box (
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ){
+            Text(
+                text = uiState.errorMessage ?: "Unknown error occured",
+                color = colorScheme.error,
+                style = Typography.bodyLarge
+            )
+        }
+        return
+    }
 
     Column (
         modifier = Modifier
@@ -55,45 +88,50 @@ fun HomeScreen() {
             .verticalScroll(rememberScrollState())
     ){
         //Header
-        PetPalHeader(
-            eyebrow = "Hello,",
-            title = "Zawadi",
-            trailingContent = {
-                Icon(
-                    imageVector = Icons.Default.Notifications,
-                    contentDescription = "Notifications",
-                    tint = extraColors.textSecondary,
-                    modifier = Modifier.size(28.dp)
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Box (
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
-                        .background(extraColors.blueFill),
-                    contentAlignment = Alignment.Center
-                ){
-                    Text(
-                        text = "ZR",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = colorScheme.onSurfaceVariant
+        uiState.user?.let { user ->
+            PetPalHeader(
+                eyebrow = "Hello,",
+                title = user.firstName,
+                trailingContent = {
+                    Icon(
+                        imageVector = Icons.Default.Notifications,
+                        contentDescription = "Notifications",
+                        tint = extraColors.textSecondary,
+                        modifier = Modifier.size(28.dp)
                     )
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    Box (
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape)
+                            .background(extraColors.blueFill),
+                        contentAlignment = Alignment.Center
+                    ){
+                        Text(
+                            text = user.initials,
+                            style = MaterialTheme.typography.titleLarge,
+                            color = colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
-            }
-        )
+            )
+        } ?: run {
+            Spacer(modifier = Modifier.height(48.dp))
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
         //Booking display section
-        if (hasUpcomingBooking) {
+        if (uiState.upcomingBooking != null) {
+            val booking = uiState.upcomingBooking!!
             TransactionCard(
                 title = "Upcoming booking",
-                subtitle = "Nicole K. • Home sitting",
-                details = "17 May • 8 AM – 6 PM • 1.2 km",
-                badgeText = "Confirmed",
-                badgeType = BadgeType.SUCCESS,
+                subtitle = "${booking.sitterName}• ${booking.serviceType}",
+                details = booking.dateString,
+                badgeText = booking.statusText,
+                badgeType = booking.badgeType,
                 onCancelClick = null
             )
         }else {
@@ -162,28 +200,31 @@ fun HomeScreen() {
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        SitterListItem(
-            initials = "NM",
-            avatarColor = extraColors.blueFill,
-            name = "Nduta Maina",
-            details = "0.8 km • Dogs",
-            price = "1,200",
-            matchPercentage = null
-        )
+        if (uiState.nearbySitters.isEmpty()) {
+            Text(
+                text = "No sitters found nearby.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = extraColors.textSecondary
+            )
+        } else {
+            uiState.nearbySitters.forEachIndexed{ index, sitter ->
+                SitterListItem(
+                    initials = sitter.initials,
+                    avatarColor = if (sitter.verified) extraColors.blueFill else extraColors.pinkFill,
+                    name = sitter.name,
+                    details = sitter.details,
+                    price = sitter.price,
+                    matchPercentage = sitter.matchPercentage
+                )
 
-        HorizontalDivider(
-            color = extraColors.divider,
-            thickness = 1.dp,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
-
-        SitterListItem(
-            initials = "MJ",
-            avatarColor = extraColors.pinkFill,
-            name = "Michael Jackson",
-            details = "1.4 km • All pets",
-            price = "500",
-            matchPercentage = null
-        )
+                if (index < uiState.nearbySitters.lastIndex) {
+                    HorizontalDivider(
+                        color = extraColors.divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                }
+            }
+        }
     }
 }

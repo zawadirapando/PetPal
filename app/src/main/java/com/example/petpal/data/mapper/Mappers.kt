@@ -56,7 +56,7 @@ fun SitterEntity.toDomain(): Sitter {
         lastName = this.lastName,
         distanceKm = this.distanceKm,
         price = this.price,
-        isVerified = this.isVerified,
+        verified = this.verified,
         acceptedPets = this.acceptedPets,
         matchScore = this.matchScore,
     )

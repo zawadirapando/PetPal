@@ -8,7 +8,7 @@ data class Sitter(
     val lastName: String,
     val distanceKm: Double,
     val price: String,
-    val isVerified: Boolean,
+    val verified: Boolean,
     val acceptedPets: String,
     val matchScore: Int?
 )
