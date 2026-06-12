@@ -26,7 +26,7 @@ fun ServiceCard(
     icon: ImageVector,
     title: String,
     subtitle: String,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
     titleColor: Color = MaterialTheme.colorScheme.onBackground,
     iconTint: Color = LocalPetPalColors.current.textSecondary,
     modifier: Modifier = Modifier

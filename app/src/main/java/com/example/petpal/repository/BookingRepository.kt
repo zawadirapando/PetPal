@@ -4,4 +4,6 @@ import com.example.petpal.domain.model.Booking
 
 interface BookingRepository{
     suspend fun getUpcomingBookingForUser(userId: String): Result<List<Booking>>
+
+    suspend fun cancelBooking(bookingId: String): Result<Unit>
 }

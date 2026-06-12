@@ -21,4 +21,16 @@ class BookingRepositoryImpl (
             Result.failure(e)
         }
     }
+
+    override suspend fun cancelBooking(bookingId: String): Result<Unit> {
+        return try {
+            firestore.collection("bookings")
+                .document(bookingId)
+                .update("status", "CANCELLED")
+                .await()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

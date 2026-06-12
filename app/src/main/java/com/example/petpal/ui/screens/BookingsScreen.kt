@@ -9,10 +9,5 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun BookingsScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ){
-        Text("Owner Bookings Screen")
-    }
+
 }
