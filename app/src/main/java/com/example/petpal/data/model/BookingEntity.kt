@@ -10,5 +10,6 @@ data class BookingEntity(
     val petIds: List<String> = emptyList(),
     val startTime: Timestamp = Timestamp.now(),
     val endTime: Timestamp = Timestamp.now(),
+    val totalPrice: String = "",
     val status: String = "PENDING"
 )

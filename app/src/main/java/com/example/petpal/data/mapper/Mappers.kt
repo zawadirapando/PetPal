@@ -41,6 +41,7 @@ fun BookingEntity.toDomain(): Booking {
         petIds = this.petIds,
         startTime = this.startTime.toDate(),
         endTime = this.endTime.toDate(),
+        totalPrice = this.totalPrice,
         status = try {
             BookingStatus.valueOf(this.status.uppercase())
         } catch (e: Exception) {

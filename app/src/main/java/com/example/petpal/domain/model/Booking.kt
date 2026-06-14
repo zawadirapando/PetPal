@@ -9,6 +9,7 @@ data class Booking(
     val petIds: List<String>,
     val startTime: Date,
     val endTime: Date,
+    val totalPrice: String,
     val status: BookingStatus
 )
 
