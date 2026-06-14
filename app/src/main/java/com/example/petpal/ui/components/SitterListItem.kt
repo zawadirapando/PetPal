@@ -1,6 +1,7 @@
 package com.example.petpal.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +34,8 @@ fun SitterListItem(
     details: String,
     price: String,
     modifier: Modifier = Modifier,
-    matchPercentage: String? = null
+    matchPercentage: String? = null,
+    rating: Int? = null
 ){
     val extraColors = LocalPetPalColors.current
     val colorScheme = MaterialTheme.colorScheme
@@ -58,7 +63,7 @@ fun SitterListItem(
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        //name, details and match
+        //name, details, match, stars
         Column (
             modifier =  modifier.weight(1f)
         ){
@@ -69,30 +74,53 @@ fun SitterListItem(
             )
 
             Row (
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ){
-                Text(
-                    text = details,
-                    style = Typography.labelMedium,
-                    color = extraColors.textSecondary
-                )
-
-                if (matchPercentage != null){
-                    Spacer(modifier = Modifier.width(8.dp))
-                    StatusBadge(
-                        text = matchPercentage,
-                        type = BadgeType.INFO
+                Row (
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Text(
+                        text = details,
+                        style = Typography.labelMedium,
+                        color = extraColors.textSecondary
                     )
+
+                    if (matchPercentage != null){
+                        Spacer(modifier = Modifier.width(8.dp))
+                        StatusBadge(
+                            text = matchPercentage,
+                            type = BadgeType.INFO
+                        )
+                    }
+                }
+
+                if (rating != null){
+                    Row {
+                        repeat(5) { index ->
+                            Icon(
+                                imageVector = Icons.Default.Star,
+                                contentDescription = null,
+                                modifier = Modifier.size(16.dp),
+                                tint = if (index < rating) colorScheme.primary else extraColors.divider
+                            )
+                        }
+                    }
                 }
             }
         }
 
         //price
-        Text(
-            text = price,
-            style = Typography.titleLarge,
-            fontWeight = FontWeight.Bold,
-            color = colorScheme.primary
-        )
+        if (rating == null){
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Text(
+                text = price,
+                style = Typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = colorScheme.primary
+            )
+        }
     }
 }
