@@ -1,4 +1,5 @@
 package com.example.petpal.viewmodels
 
-class BookingViewModel {
-}
+data class UpcomingBookingUiModel(
+
+)

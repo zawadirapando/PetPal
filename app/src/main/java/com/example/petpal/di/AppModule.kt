@@ -4,6 +4,8 @@ import com.example.petpal.repository.AuthRepository
 import com.example.petpal.repository.AuthRepositoryImpl
 import com.example.petpal.repository.BookingRepository
 import com.example.petpal.repository.BookingRepositoryImpl
+import com.example.petpal.repository.PetRepository
+import com.example.petpal.repository.PetRepositoryImpl
 import com.example.petpal.repository.SitterRepository
 import com.example.petpal.repository.SitterRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
@@ -45,5 +47,11 @@ object AppModule {
     @Singleton
     fun provideBookingRepository(firestore: FirebaseFirestore): BookingRepository {
         return BookingRepositoryImpl(firestore)
+    }
+
+    @Provides
+    @Singleton
+    fun providePetRepository(firestore: FirebaseFirestore): PetRepository {
+        return PetRepositoryImpl(firestore)
     }
 }
