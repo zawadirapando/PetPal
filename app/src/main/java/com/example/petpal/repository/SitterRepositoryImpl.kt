@@ -20,4 +20,26 @@ class SitterRepositoryImpl (
             Result.failure(e)
         }
     }
+
+    override suspend fun getSitterById(sitterId: String): Result<Sitter> {
+        return try {
+            val document = firestore.collection("sitters")
+                .document(sitterId)
+                .get()
+                .await()
+
+            if (document.exists()){
+                val entity = document.toObject(SitterEntity::class.java)
+                if (entity != null){
+                    Result.success(entity.toDomain())
+                } else {
+                    Result.failure(Exception("Fail to parse Sitter"))
+                }
+            } else {
+                Result.failure(Exception("Sitter not found"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }
