@@ -72,7 +72,7 @@ fun HomeScreen(
             contentAlignment = Alignment.Center
         ){
             Text(
-                text = uiState.errorMessage ?: "Unknown error occured",
+                text = uiState.errorMessage ?: "Unknown error occurred",
                 color = colorScheme.error,
                 style = Typography.bodyLarge
             )
