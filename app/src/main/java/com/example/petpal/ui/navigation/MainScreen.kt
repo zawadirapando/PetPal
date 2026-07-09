@@ -22,7 +22,9 @@ import com.example.petpal.ui.screens.ProfileScreen
 import com.example.petpal.ui.screens.RescueScreen
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    onNavigatetoChats: () -> Unit
+) {
     val navController = rememberNavController()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -65,7 +67,7 @@ fun MainScreen() {
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(paddingValues)
         ){
-            composable(Screen.Home.route) { HomeScreen() }
+            composable(Screen.Home.route) { HomeScreen(onNavigateToChats = onNavigatetoChats) }
             composable(Screen.Find.route) { FindScreen() }
             composable(Screen.Bookings.route) { BookingsScreen() }
             composable(Screen.Rescue.route) { RescueScreen() }

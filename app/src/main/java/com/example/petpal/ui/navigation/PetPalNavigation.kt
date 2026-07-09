@@ -5,6 +5,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.petpal.ui.screens.ChatListScreen
+import com.example.petpal.ui.screens.HomeScreen
 import com.example.petpal.ui.screens.LoginScreen
 import com.example.petpal.ui.screens.ResetPasswordScreen
 import com.example.petpal.ui.screens.SignUpScreen
@@ -59,8 +61,28 @@ fun PetPalNavigation(
             )
         }
 
+        composable("home"){
+            HomeScreen (
+                onNavigateToChats = {
+                    navController.navigate("chatList")
+                }
+            )
+        }
+
+        composable("chatList"){
+            ChatListScreen (
+                onNavigateToChatDetail = {threadId ->
+                    println("Clicked chat: $threadId")
+                }
+            )
+        }
+
         composable("main_app"){
-            MainScreen()
+            MainScreen(
+                onNavigatetoChats = {
+                    navController.navigate("chatList")
+                }
+            )
         }
     }
 }

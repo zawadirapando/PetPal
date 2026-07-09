@@ -16,7 +16,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.outlined.Bedtime
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Pets
@@ -24,6 +27,7 @@ import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,7 +51,8 @@ import com.example.petpal.viewmodels.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onNavigateToChats: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -93,12 +98,14 @@ fun HomeScreen(
                 eyebrow = "Hello,",
                 title = user.firstName,
                 trailingContent = {
-                    Icon(
-                        imageVector = Icons.Default.Notifications,
-                        contentDescription = "Notifications",
-                        tint = extraColors.textSecondary,
-                        modifier = Modifier.size(28.dp)
-                    )
+                    IconButton(onClick = onNavigateToChats) {
+                        Icon(
+                            imageVector = Icons.Default.MailOutline,
+                            contentDescription = "Messages",
+                            tint = extraColors.textSecondary,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
 
                     Spacer(modifier = Modifier.width(8.dp))
 
