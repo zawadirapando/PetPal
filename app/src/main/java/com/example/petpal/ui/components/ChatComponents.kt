@@ -135,9 +135,9 @@ fun ChatBubble(
                 .fillMaxWidth(0.85f)
                 .clip(
                     RoundedCornerShape(
-                        topStart = 16.dp,
+                        topStart = if (isSender) 16.dp else 4.dp,
                         topEnd = 16.dp,
-                        bottomStart = if (isSender) 16.dp else 4.dp,
+                        bottomStart = 16.dp,
                         bottomEnd = if (isSender) 4.dp else 16.dp
                     )
                 )

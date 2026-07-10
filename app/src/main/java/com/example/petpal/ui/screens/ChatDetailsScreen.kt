@@ -19,17 +19,25 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.petpal.ui.components.ChatBubble
 import com.example.petpal.ui.models.ChatMessageUiModel
@@ -45,6 +53,8 @@ fun ChatDetailsScreen(
     val colorScheme = MaterialTheme.colorScheme
 
     val listState = rememberLazyListState()
+
+    var inputText by remember { mutableStateOf("") }
 
     val messages = listOf(
         ChatMessageUiModel("1", "Hi! Happy to sit Coco this weekend.", "10:00 AM", MessageType.RECEIVER),
@@ -86,6 +96,7 @@ fun ChatDetailsScreen(
                 .padding(bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
+            //TOP BAR
             //back button
             IconButton(
                 onClick = onNavigateBack
@@ -143,9 +154,12 @@ fun ChatDetailsScreen(
             }
         }
 
+        //MESSAGE HISTORY
         LazyColumn (
             state = listState,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .padding(bottom = 8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ){
             items(messages) { message ->
@@ -156,6 +170,56 @@ fun ChatDetailsScreen(
                 )
             }
         }
+
+        //CHAT INPUT
+        Row (
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            OutlinedTextField(
+                value = inputText,
+                onValueChange = {inputText = it},
+                placeholder = {
+                    Text(
+                        text = "Type a message...",
+                        style = Typography.bodyMedium,
+                        color = extraColors.textSecondary
+                    )
+                },
+                textStyle = Typography.bodyMedium,
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(24.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = Color.Gray,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedBorderColor = colorScheme.primary,
+                    focusedContainerColor = Color.Transparent
+                )
+            )
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            IconButton (
+                onClick = {
+                    //TODO: Message sending logic
+                    println("Send button clicked")
+                },
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(colorScheme.primary)
+            ){
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.Send,
+                    contentDescription = "Send",
+                    tint = colorScheme.onPrimary,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+        }
+
 
     }
 }
