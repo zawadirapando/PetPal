@@ -132,7 +132,7 @@ fun ChatBubble(
     ){
         Column (
             modifier = Modifier
-                .fillMaxWidth(0.75f)
+                .fillMaxWidth(0.85f)
                 .clip(
                     RoundedCornerShape(
                         topStart = 16.dp,
@@ -142,11 +142,11 @@ fun ChatBubble(
                     )
                 )
                 .background(if (isSender) colorScheme.primary else colorScheme.surfaceVariant)
-                .padding(horizontal = 16.dp, vertical = 12.dp)
+                .padding(horizontal = 16.dp, vertical = 6.dp)
         ){
             Text(
                 text = message,
-                style = Typography.bodyLarge,
+                style = Typography.bodyMedium,
                 color = if (isSender) colorScheme.onPrimary else colorScheme.onBackground
             )
             Text(

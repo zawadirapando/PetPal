@@ -16,9 +16,9 @@ enum class MessageType {
     RECEIVER
 }
 
-data class ChatMessageUiModels (
+data class ChatMessageUiModel (
     val threadId: String,
     val text: String,
-    val type: MessageType,
     val timestamp: String,
+    val type: MessageType
 )
